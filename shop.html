@@ -1,0 +1,299 @@
+
+# HOME
+# отображение страницы товара
+
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path='C:/chromedriver.exe')
+#driver.maximize_window()
+driver.implicitly_wait(5)
+wait = WebDriverWait(driver,10)
+driver.get("https://practice.automationtesting.in/")
+
+my_account = driver.find_element_by_link_text("My Account").click()
+email_log = driver.find_element_by_css_selector(".login #username")
+email_log.send_keys("elena-nik19@mail.ru")
+password_log = driver.find_element_by_css_selector(".login #password")
+password_log.send_keys("1004Oxi#$")
+login_btn = driver.find_element_by_css_selector(".form-row .button").click()
+shop = driver.find_element_by_id("menu-item-40").click()
+HTML5_forms_book = driver.find_element_by_css_selector(".post-181 h3").click()
+
+book_title = driver.find_element_by_css_selector("#content :nth-child(2) h1")
+book_title_text = book_title.text
+assert book_title_text == "HTML5 Forms"
+time.sleep(2)
+driver.quit()
+
+# HOME
+# количество товаров в категории
+
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path='C:/chromedriver.exe')
+#driver.maximize_window()
+driver.implicitly_wait(5)
+wait = WebDriverWait(driver,10)
+driver.get("https://practice.automationtesting.in/")
+
+my_account = driver.find_element_by_link_text("My Account").click()
+email_log = driver.find_element_by_css_selector(".login #username")
+email_log.send_keys("elena-nik19@mail.ru")
+password_log = driver.find_element_by_css_selector(".login #password")
+password_log.send_keys("1004Oxi#$")
+login_btn = driver.find_element_by_css_selector(".form-row .button").click()
+shop = driver.find_element_by_id("menu-item-40").click()
+html_btn = driver.find_element_by_css_selector("li.cat-item.cat-item-19").click()
+time.sleep(2)
+
+items_count = driver.find_elements_by_class_name("woocommerce-LoopProduct-link")
+if len(items_count) == 3:
+    print("На странице 3 товара")
+else:
+    print("Ошибка. Количество товаров на странице: " + str(len(items_count)))
+time.sleep(2)
+driver.quit()
+
+
+# HOME
+# сортировка товаров
+
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+from selenium.webdriver.support.select import Select
+
+driver = webdriver.Chrome(executable_path='C:/chromedriver.exe')
+#driver.maximize_window()
+driver.implicitly_wait(5)
+wait = WebDriverWait(driver,10)
+driver.get("https://practice.automationtesting.in/")
+
+my_account = driver.find_element_by_link_text("My Account").click()
+email_log = driver.find_element_by_css_selector(".login #username")
+email_log.send_keys("elena-nik19@mail.ru")
+password_log = driver.find_element_by_css_selector(".login #password")
+password_log.send_keys("1004Oxi#$")
+login_btn = driver.find_element_by_css_selector(".form-row .button").click()
+shop = driver.find_element_by_id("menu-item-40").click()
+
+defaulf_sorting = driver.find_element_by_css_selector(".orderby :nth-child(1)")
+defaulf_sorting_check = defaulf_sorting.get_attribute("value")
+if defaulf_sorting_check == "menu_order":
+    print ("Сортировка по умолчанию")
+else:
+    print ("Другое")
+time.sleep(2)
+
+select = Select(driver.find_element_by_css_selector("#layout .orderby"))
+select.select_by_value("price-desc")
+time.sleep(2)
+
+price_desc_sorting = driver.find_element_by_css_selector("#layout .orderby")
+price_desc_sorting = price_desc_sorting.get_attribute("value")
+if price_desc_sorting == "price-desc":
+    print ("Сортировка по цене от большей к меньшей")
+else:
+    print ("Другое")
+driver.quit()
+
+
+# HOME
+# отображение, скидка товара
+
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path='C:/chromedriver.exe')
+#driver.maximize_window()
+driver.implicitly_wait(5)
+wait = WebDriverWait(driver,10)
+driver.get("https://practice.automationtesting.in/")
+
+my_account = driver.find_element_by_link_text("My Account").click()
+username_field = driver.find_element_by_id("username")
+username_field.send_keys("elena-nik19@mail.ru")
+password_field = driver.find_element_by_id("password")
+password_field.send_keys("1004Oxi#$")
+login_btn = driver.find_element_by_name("login").click()
+time.sleep(3)
+
+shop = driver.find_element_by_id("menu-item-40").click()
+android_quick_start_quide = driver.find_element_by_css_selector(".post-169 h3").click()
+old_price = driver.find_element_by_css_selector(".price > del > span")
+old_price_text = old_price.text
+new_price = driver.find_element_by_css_selector(".price > ins > span")
+new_price_text = new_price.text
+assert old_price_text == "₹600.00"
+assert new_price_text == "₹450.00"
+
+book_cover = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.CSS_SELECTOR, ".images")))
+book_cover.click()
+
+book_cover_close = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.CSS_SELECTOR, ".pp_close")))
+book_cover_close.click()
+time.sleep(2)
+
+driver.quit()
+
+
+# HOME
+# проверка цены в корзине
+
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path='C:/chromedriver.exe')
+#driver.maximize_window()
+driver.implicitly_wait(5)
+wait = WebDriverWait(driver,10)
+driver.get("https://practice.automationtesting.in/")
+
+shop = driver.find_element_by_id("menu-item-40").click()
+cart_btn = driver.find_element_by_css_selector("li.post-182.product.type-product.status-publish.product_cat-html.product_tag-html.has-post-title.no-post-date.has-post-category.has-post-tag.has-post-comment.has-post-author.last.instock.taxable.shipping-taxable.purchasable.product-type-simple a.button.product_type_simple.add_to_cart_button.ajax_add_to_cart").click()
+time.sleep(2)
+cart_item = driver.find_element_by_css_selector(".wpmenucart-contents :nth-child(2)")
+cart_item_text = cart_item.text
+cart_price = driver.find_element_by_css_selector(".wpmenucart-contents :nth-child(3)")
+cart_price_text = cart_price.text
+time.sleep(2)
+assert cart_item_text == "1 Item"
+assert cart_price_text == "₹180.00"
+time.sleep(3)
+
+cart_item = driver.find_element_by_css_selector(".wpmenucart-contents :nth-child(2)").click()
+subtotal_price = WebDriverWait(driver,10).until(EC.text_to_be_present_in_element((By.CSS_SELECTOR,"#page-34 tr.cart-subtotal td span"),"₹180.00"))
+total_price = WebDriverWait(driver,10).until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".order-total :nth-child(2)"),"₹183.60"))
+time.sleep(2)
+driver.quit()
+
+
+# HOME
+# работа в корзине
+
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path='C:/chromedriver.exe')
+#driver.maximize_window()
+driver.implicitly_wait(5)
+wait = WebDriverWait(driver,10)
+driver.get("https://practice.automationtesting.in/")
+
+shop = driver.find_element_by_id("menu-item-40").click()
+driver.execute_script("window.scrollBy(0,300);")
+cart_book1 = driver.find_element_by_css_selector("li.post-182.product.type-product.status-publish.product_cat-html.product_tag-html.has-post-title.no-post-date.has-post-category.has-post-tag.has-post-comment.has-post-author.last.instock.taxable.shipping-taxable.purchasable.product-type-simple a.button.product_type_simple.add_to_cart_button.ajax_add_to_cart").click()
+time.sleep(3)
+cart_book2 = driver.find_element_by_css_selector("li.post-180.product.type-product.status-publish.product_cat-javascript.product_tag-javascript.has-post-title.no-post-date.has-post-category.has-post-tag.has-post-comment.has-post-author.first.instock.downloadable.taxable.shipping-taxable.purchasable.product-type-simple a.button.product_type_simple.add_to_cart_button.ajax_add_to_cart").click()
+time.sleep(3)
+cart = driver.find_element_by_css_selector(".wpmenucart-contents :nth-child(2)").click()
+time.sleep(3)
+delete_book1 = driver.find_element_by_css_selector(".product-remove :nth-child(1)").click()
+time.sleep(4)
+undo_btn = driver.find_element_by_link_text("Undo?").click()
+time.sleep(2)
+book1_quantity = driver.find_element_by_css_selector(".quantity :nth-child(1)").clear()
+book1_quantity = driver.find_element_by_css_selector(".quantity :nth-child(1)")
+book1_quantity.send_keys("3")
+time.sleep(4)
+update_basket = driver.find_element_by_name("update_cart").click()
+time.sleep(4)
+
+book1_quantity = driver.find_element_by_css_selector(".quantity :nth-child(1)")
+book1_quantity_check = book1_quantity.get_attribute("value")
+assert book1_quantity_check == "3"
+
+apply_coupon = driver.find_element_by_css_selector(".actions :nth-child(3)").click()
+time.sleep(3)
+code_request = WebDriverWait(driver,10).until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".woocommerce-error li"), "Please enter a coupon code."))
+time.sleep(3)
+
+driver.quit()
+
+
+# HOME
+# покупка товара
+
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path='C:/chromedriver.exe')
+#driver.maximize_window()
+driver.implicitly_wait(5)
+wait = WebDriverWait(driver,10)
+driver.get("https://practice.automationtesting.in/")
+shop = driver.find_element_by_id("menu-item-40").click()
+driver.execute_script("window.scrollBy(0,300);")
+cart_book1 = driver.find_element_by_css_selector("li.post-182.product.type-product.status-publish.product_cat-html.product_tag-html.has-post-title.no-post-date.has-post-category.has-post-tag.has-post-comment.has-post-author.last.instock.taxable.shipping-taxable.purchasable.product-type-simple a.button.product_type_simple.add_to_cart_button.ajax_add_to_cart").click()
+time.sleep(3)
+cart = driver.find_element_by_css_selector(".wpmenucart-contents :nth-child(2)").click()
+time.sleep(3)
+# proceed_to_checkout = driver.find_element_by_css_selector(".wc-proceed-to-checkout a").click()
+proceed_to_checkout = WebDriverWait(driver,5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".wc-proceed-to-checkout a")))
+proceed_to_checkout.click()
+time.sleep(3)
+
+first_name = WebDriverWait(driver,5).until(EC.element_to_be_clickable((By.NAME, "billing_first_name")))
+# first_name = driver.find_element_by_name("billing_first_name")
+first_name.send_keys("Elena")
+last_name = driver.find_element_by_id("billing_last_name")
+last_name.send_keys("Triers")
+email = driver.find_element_by_id("billing_email")
+email.send_keys("elena-nik19@mail.ru")
+phone = driver.find_element_by_id("billing_phone")
+phone.send_keys("+79218569452")
+time.sleep(5)
+country_select = driver.find_element_by_id("s2id_billing_country").click()
+time.sleep(3)
+country_field = driver.find_element_by_id("s2id_autogen1_search")
+time.sleep(2)
+country_field.send_keys("Russia")
+time.sleep(4)
+country_my = driver.find_element_by_css_selector("#select2-results-1 li").click()
+time.sleep(2)
+driver.implicitly_wait(10)
+street_address = driver.find_element_by_id("billing_address_1")
+street_address.send_keys("Sadovaya")
+apart_address = driver.find_element_by_id("billing_address_2")
+apart_address.send_keys("5")
+city_address = driver.find_element_by_id("billing_city")
+city_address.send_keys("Saint-Petersburg")
+state_address = driver.find_element_by_id("billing_state")
+state_address.send_keys("Russia")
+zip_address = driver.find_element_by_id("billing_postcode")
+zip_address.send_keys("197766")
+time.sleep(3)
+
+driver.execute_script("window.scrollBy(0,600);")
+check_payments = driver.find_element_by_id("payment_method_cheque").click()
+time.sleep(3)
+place_order = driver.find_element_by_id("place_order").click()
+time.sleep(3)
+
+thank_you_sign = WebDriverWait(driver,5).until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".woocommerce :nth-child(1)"), "Thank you. Your order has been received."))
+payment_method = WebDriverWait(driver,5).until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".method :nth-child(1)"), "Check Payments"))
+driver.quit()

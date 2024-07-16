@@ -1,0 +1,49 @@
+#LOGIN-REGISTRATION
+###регистрация аккаунта
+
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path='C:/chromedriver.exe')
+#driver.maximize_window()
+driver.implicitly_wait(5)
+wait = WebDriverWait(driver,10)
+driver.get("https://practice.automationtesting.in/")
+
+my_account = driver.find_element_by_link_text("My Account").click()
+email_reg = driver.find_element_by_css_selector(".register #reg_email")
+email_reg.send_keys("lena-nik19@mail.ru")
+password_reg = driver.find_element_by_css_selector(".register #reg_password")
+password_reg.send_keys("654321Oxi#$")
+register_btn = driver.find_element_by_css_selector(".register .button.disabled").click()
+time.sleep(3)
+driver.quit()
+
+#LOGIN-REGISTRATION
+###логин в систему
+
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+from selenium.webdriver.support.select import Select
+
+driver = webdriver.Chrome(executable_path='C:/chromedriver.exe')
+#driver.maximize_window()
+driver.implicitly_wait(5)
+wait = WebDriverWait(driver,10)
+driver.get("https://practice.automationtesting.in/")
+
+my_account = driver.find_element_by_link_text("My Account").click()
+email_log = driver.find_element_by_css_selector(".login #username")
+email_log.send_keys("elena-nik19@mail.ru")
+password_log = driver.find_element_by_css_selector(".login #password")
+password_log.send_keys("1004Oxi#$")
+login_btn = driver.find_element_by_css_selector(".form-row .button").click()
+
+logout_btn = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#page-36 :nth-child(6)")))
+driver.quit()
